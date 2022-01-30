@@ -20,8 +20,8 @@ import (
 	"errors"
 	"log"
 
+	pbaddsvc "../../pb/addsvc"
 	grpctransport "github.com/go-kit/kit/transport/grpc"
-	"github.com/kevinnguyenai/golang-tutorials/27-gokit-grpc/pb/addsvc"
 	stdopentracing "github.com/opentracing/opentracing-go"
 	stdzipkin "github.com/openzipkin/zipkin-go"
 	"google.golang.org/grpc"
@@ -45,12 +45,12 @@ func NewGRPCClient(conn *grpc.ClientConn, otTracer stdopentracing.Tracer, zipkin
 
 func encodeGRPCSumRequest(_ context.Context, request interface{}) (interface{}, error) {
 	req := request.(SumRequest)
-	return &addsvc.SumRequest{A: int64(req.A), B: int64(req.B)}, nil
+	return &pbaddsvc.SumRequest{A: int64(req.A), B: int64(req.B)}, nil
 }
 
 func encodeGRPCConcatRequest(_ context.Context, request interface{}) (interface{}, error) {
 	req := request.(ConcatRequest)
-	return &addsvc.ConcatRequest{A: string(req.A), B: string(req.B)}, nil
+	return &pbaddsvc.ConcatRequest{A: string(req.A), B: string(req.B)}, nil
 }
 
 // These annoying helper functions are required to translate Go error types to

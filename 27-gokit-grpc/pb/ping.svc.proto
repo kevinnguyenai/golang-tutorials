@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./";
+
+// the ping service defination
+
+service Ping {
+    // Ping command
+    rpc ping(PingRequest) returns (PongReply) {}
+}
+
+message PingRequest {
+    string type = 1;    // type of request
+    string rid = 2;     // request id = uuid
+    string tid = 3;     // transaction id = uuid
+    string from = 4;    // requestor service name
+    string to = 5;      // receiver service name
+    string msg = 6;     // msg = "PING"
+}
+
+message PongReply {
+    string type = 1;    // type of request
+    string rid = 2;     // response id = uuid
+    string tid = 3;     // transaction id = uuid
+    string from = 4;    // requestor service name
+    string to = 5;      // receiver service name 
+    string msg = 6;     // msg = "PONG"
+}

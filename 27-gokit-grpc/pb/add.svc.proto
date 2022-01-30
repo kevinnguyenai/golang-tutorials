@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package pb;
+
+option go_package = "./";
+
+
+// addsvc defination
+service Add {
+    // Sum of two integers
+    rpc Add(SumRequest) returns (SumReply) {}
+
+    // Concentrates two strings
+    rpc Concat(ConcatRequest) returns (ConcatReply) {}
+}
+
+// The sum request contains two parameters.
+message SumRequest {
+    int64 a = 1;
+    int64 b = 2;
+}
+// The sum reply contains sum of a & b ~ v and err if exists
+message SumReply {
+    int64 v = 1;
+    string err = 2;
+}
+
+// The Concat request contains two parameters
+message ConcatRequest {
+    string a = 1;
+    string b = 2;
+}
+
+// The Concat response contains the result of Concentrates
+message ConcatReply {
+    string v = 1;
+    string err = 2;
+}
+

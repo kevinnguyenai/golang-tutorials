@@ -21,7 +21,7 @@ import (
 	"log"
 
 	grpctransport "github.com/go-kit/kit/transport/grpc"
-	"github.com/kevinnguyenai/golang-tutorials/gokitgrpc/pb"
+	"github.com/kevinnguyenai/golang-tutorials/27-gokit-grpc/pb"
 	stdopentracing "github.com/opentracing/opentracing-go"
 	stdzipkin "github.com/openzipkin/zipkin-go"
 	"google.golang.org/grpc"

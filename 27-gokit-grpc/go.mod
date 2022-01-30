@@ -1,4 +1,4 @@
-module github.com/kevinnguyenai/golang-tutorials/27-gokit-grpc
+module github.com/kevinnguyenai/golang-tutorials/gokitgrpc
 
 go 1.17
 

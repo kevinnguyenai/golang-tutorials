@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package addsvc;
+package pb;
 
-option go_package = "../../pb/addsvc";
+option go_package = "../pb";
 
 
 // addsvc defination

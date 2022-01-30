@@ -4,7 +4,7 @@
 // 	protoc        v3.19.4
 // source: add.svc.proto
 
-package addsvc
+package __
 
 import (
 	context "context"

@@ -264,7 +264,7 @@ var file_add_svc_proto_rawDesc = []byte{
 	0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x0c, 0x0a, 0x01, 0x76, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x01, 0x76, 0x12, 0x10, 0x0a, 0x03, 0x65, 0x72, 0x72, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x03, 0x65, 0x72, 0x72, 0x32, 0x5c, 0x0a, 0x03, 0x41, 0x64, 0x64, 0x12, 0x25, 0x0a, 0x03,
-	0x41, 0x64, 0x64, 0x12, 0x0e, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x75, 0x6d, 0x52, 0x65, 0x71, 0x75,
+	0x53, 0x75, 0x6d, 0x12, 0x0e, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x75, 0x6d, 0x52, 0x65, 0x71, 0x75,
 	0x65, 0x73, 0x74, 0x1a, 0x0c, 0x2e, 0x70, 0x62, 0x2e, 0x53, 0x75, 0x6d, 0x52, 0x65, 0x70, 0x6c,
 	0x79, 0x22, 0x00, 0x12, 0x2e, 0x0a, 0x06, 0x43, 0x6f, 0x6e, 0x63, 0x61, 0x74, 0x12, 0x11, 0x2e,
 	0x70, 0x62, 0x2e, 0x43, 0x6f, 0x6e, 0x63, 0x61, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
@@ -293,9 +293,9 @@ var file_add_svc_proto_goTypes = []interface{}{
 	(*ConcatReply)(nil),   // 3: pb.ConcatReply
 }
 var file_add_svc_proto_depIdxs = []int32{
-	0, // 0: pb.Add.Add:input_type -> pb.SumRequest
+	0, // 0: pb.Add.Sum:input_type -> pb.SumRequest
 	2, // 1: pb.Add.Concat:input_type -> pb.ConcatRequest
-	1, // 2: pb.Add.Add:output_type -> pb.SumReply
+	1, // 2: pb.Add.Sum:output_type -> pb.SumReply
 	3, // 3: pb.Add.Concat:output_type -> pb.ConcatReply
 	2, // [2:4] is the sub-list for method output_type
 	0, // [0:2] is the sub-list for method input_type
@@ -392,7 +392,7 @@ const _ = grpc.SupportPackageIsVersion6
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type AddClient interface {
 	// Sum of two integers
-	Add(ctx context.Context, in *SumRequest, opts ...grpc.CallOption) (*SumReply, error)
+	Sum(ctx context.Context, in *SumRequest, opts ...grpc.CallOption) (*SumReply, error)
 	// Concentrates two strings
 	Concat(ctx context.Context, in *ConcatRequest, opts ...grpc.CallOption) (*ConcatReply, error)
 }
@@ -405,9 +405,9 @@ func NewAddClient(cc grpc.ClientConnInterface) AddClient {
 	return &addClient{cc}
 }
 
-func (c *addClient) Add(ctx context.Context, in *SumRequest, opts ...grpc.CallOption) (*SumReply, error) {
+func (c *addClient) Sum(ctx context.Context, in *SumRequest, opts ...grpc.CallOption) (*SumReply, error) {
 	out := new(SumReply)
-	err := c.cc.Invoke(ctx, "/pb.Add/Add", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/pb.Add/Sum", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -426,7 +426,7 @@ func (c *addClient) Concat(ctx context.Context, in *ConcatRequest, opts ...grpc.
 // AddServer is the server API for Add service.
 type AddServer interface {
 	// Sum of two integers
-	Add(context.Context, *SumRequest) (*SumReply, error)
+	Sum(context.Context, *SumRequest) (*SumReply, error)
 	// Concentrates two strings
 	Concat(context.Context, *ConcatRequest) (*ConcatReply, error)
 }
@@ -435,8 +435,8 @@ type AddServer interface {
 type UnimplementedAddServer struct {
 }
 
-func (*UnimplementedAddServer) Add(context.Context, *SumRequest) (*SumReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Add not implemented")
+func (*UnimplementedAddServer) Sum(context.Context, *SumRequest) (*SumReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Sum not implemented")
 }
 func (*UnimplementedAddServer) Concat(context.Context, *ConcatRequest) (*ConcatReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Concat not implemented")
@@ -446,20 +446,20 @@ func RegisterAddServer(s *grpc.Server, srv AddServer) {
 	s.RegisterService(&_Add_serviceDesc, srv)
 }
 
-func _Add_Add_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Add_Sum_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SumRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AddServer).Add(ctx, in)
+		return srv.(AddServer).Sum(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/pb.Add/Add",
+		FullMethod: "/pb.Add/Sum",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AddServer).Add(ctx, req.(*SumRequest))
+		return srv.(AddServer).Sum(ctx, req.(*SumRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -487,8 +487,8 @@ var _Add_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*AddServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Add",
-			Handler:    _Add_Add_Handler,
+			MethodName: "Sum",
+			Handler:    _Add_Sum_Handler,
 		},
 		{
 			MethodName: "Concat",

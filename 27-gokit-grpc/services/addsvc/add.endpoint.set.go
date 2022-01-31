@@ -77,6 +77,24 @@ func New(svc Service, logger log.Logger, duration metrics.Histogram, otTracer st
 	}
 }
 
+func (s Set) Sum(ctx context.Context, a, b int) (int, error) {
+	resq, err := s.SumEndpoint(ctx, SumRequest{A: a, B: b})
+	if err != nil {
+		return 0, err
+	}
+	response := resq.(SumResponse)
+	return response.V, response.Err
+}
+
+func (s Set) Concat(ctx context.Context, a, b string) (string, error) {
+	resq, err := s.ConcatEndpoint(ctx, ConcatRequest{A: a, B: b})
+	if err != nil {
+		return "", err
+	}
+	response := resq.(ConcatResponse)
+	return response.V, response.Err
+}
+
 // MakeSumEndpoint construct a Sum endpoint wrapping the service
 func MakeSumEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {

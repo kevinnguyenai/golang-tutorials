@@ -8,7 +8,7 @@ option go_package = "../pb";
 // addsvc defination
 service Add {
     // Sum of two integers
-    rpc Add(SumRequest) returns (SumReply) {}
+    rpc Sum(SumRequest) returns (SumReply) {}
 
     // Concentrates two strings
     rpc Concat(ConcatRequest) returns (ConcatReply) {}

@@ -42,7 +42,7 @@ type Set struct {
 
 // New returns a Set that wraps the provided server, and wires in all of the
 // expected endpoint middleware via the various parametter
-func New(svc Service, logger log.Logger, duration metrics.Histogram, otTracer stdopentracing.Tracer, zipkinTracer *stdzipkin.Tracer) Set {
+func NewEndpoint(svc Service, logger log.Logger, duration metrics.Histogram, otTracer stdopentracing.Tracer, zipkinTracer *stdzipkin.Tracer) Set {
 	var sumEndpoint endpoint.Endpoint
 	{
 		sumEndpoint = MakeSumEndpoint(svc)

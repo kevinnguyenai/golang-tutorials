@@ -74,6 +74,22 @@ func NewGRPCServer(endpoints Set, otTracer stdopentracing.Tracer, zipkinTracer *
 	}
 }
 
+func (s *grpcServer) Sum(ctx context.Context, req *pb.SumRequest) (*pb.SumReply, error) {
+	_, rep, err := s.sum.ServeGRPC(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return rep.(*pb.SumReply), nil
+}
+
+func (s *grpcServer) Concat(ctx context.Context, req *pb.ConcatRequest) (*pb.ConcatReply, error) {
+	_, rep, err := s.concat.ServeGRPC(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return rep.(*pb.ConcatReply), nil
+}
+
 // NewGRPCClient returns an AddService backed by a gRPC server at the other end
 // of the conn. The caller is responsilbe for constructing the conn, and
 // eventually closing the underlying transport. We bake-in certain middlewares,
